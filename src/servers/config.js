@@ -1,9 +1,9 @@
 import express from "express";
 import Cors from "cors";
-import mongoose from "mongoose";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
+import "./dbConfig.js"
 
 export default class Server {
   constructor() {
@@ -27,6 +27,7 @@ export default class Server {
     this.app.listen(this.port, () =>
             console.info(
               `El servidor se esta ejecutando en: http://localhost:${this.port}`
-            )    );
+            )
+    );
   }
 }
