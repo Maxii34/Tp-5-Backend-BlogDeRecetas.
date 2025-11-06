@@ -10,10 +10,26 @@ export const crearRecetas = async (req, res) => {
     res.status(500).json({ mensaje: "Error al crear la receta" });
   }
 };
+
 export const listarRecetas = async (req, res) => {
   try {
     const recetas = await Producto.find();
     res.status(200).json(recetas);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: "Error al crear la receta" });
+  }
+};
+
+export const borrarRecetas = async (req, res) => {
+  try {
+    console.log(req.params.id);
+    const recetaBuscada = await Producto.findById(req.params.id);
+    if (!recetaBuscada) {
+        return res.status(404).json({ mensaje: "Receta no encontrada" });
+    } 
+    await Producto.findByIdAndDelete(req.params.id);
+    res.status(200).json({ mensaje: "La receta fue borrada exitosamente" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ mensaje: "Error al crear la receta" });

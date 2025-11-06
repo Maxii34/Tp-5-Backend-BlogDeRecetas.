@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { crearRecetas, listarRecetas } from "../controllers/producto.controllers.js";
+import { crearRecetas, listarRecetas, borrarRecetas } from "../controllers/producto.controllers.js";
 
 
 /*Get, Post, Path, Put, Delete*/
@@ -7,6 +7,7 @@ import { crearRecetas, listarRecetas } from "../controllers/producto.controllers
 const router = Router();
 
 router.route('/').post(crearRecetas).get(listarRecetas);
+router.route('/:id').delete(borrarRecetas);
 
 
 
