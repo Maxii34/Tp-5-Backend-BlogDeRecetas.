@@ -8,7 +8,7 @@ import validarReceta from "../middlewares/validacionProductos.js";
 const router = Router();
 
 router.route('/').post(validarReceta,crearRecetas).get(listarRecetas);
-router.route('/:id').delete(borrarRecetas).put(editarRecetas).get(obtenerRecetas);
+router.route('/:id').delete(borrarRecetas).put(validarReceta,editarRecetas).get(obtenerRecetas);
 
 
 

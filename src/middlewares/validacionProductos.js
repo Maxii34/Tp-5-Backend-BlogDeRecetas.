@@ -1,19 +1,32 @@
 import { body } from "express-validator";
 import resultadoValidacion from "./resultadoValidacion.js";
+import Producto from "../models/productos.js";
 
 const validarReceta = [
   body("nombre")
     .notEmpty()
     .withMessage("El nombre de la receta es obligatorio")
     .isLength({ min: 3, max: 50 })
-    .withMessage(
-      "El nombre de la receta debe contener entre 3 y 50 caracteres"
-    ),
+    .withMessage("El nombre de la receta debe contener entre 3 y 50 caracteres")
+    .custom(async (valor, { req }) => {
+      const recetaExistente = await Producto.findOne({ nombre: valor });
+      //Si no se encontro un producto con el nombre del valor
+      if (!recetaExistente) {
+        return true;
+      }
+      // enviar un mensaje de error
+      if (req.params?.id && recetaExistente._id.toString() === req.params.id) {
+        return true;
+      }
+      throw new Error("Ya existe una receta con ese nombre");
+    }),
   body("imagen")
     .notEmpty()
     .withMessage("La imagen de la receta es obligatoria")
     .matches(/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i)
-    .withMessage("La imagen deve cumplir con el formato de una url de imagenes, terminada en algunos de los siquientes valores: png|jpg|jpeg|gif|webp"),
+    .withMessage(
+      "La imagen deve cumplir con el formato de una url de imagenes, terminada en algunos de los siquientes valores: png|jpg|jpeg|gif|webp"
+    ),
   body("ingredientes")
     .notEmpty()
     .withMessage("Los ingredientes de la receta son obligatorios")
