@@ -24,3 +24,31 @@ export const listarUsuarios = async (req, res) => {
     res.status(500).json({ mensaje: "Ocurrio un error al listar el usuario" });
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //Verificar el email
+    const usuarioEncontrado = await usuario.findOne({ email });
+    if (!usuarioEncontrado) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+    //Verificar el password
+    const passwordValido = bcrypt.compareSync(
+      password,
+      usuarioEncontrado.password
+    );
+    if (!passwordValido) {
+      return res.status(401).json({ mensaje: "Contraseña incorrecta" });
+    }
+    res
+      .status(200)
+      .json({
+        mensaje: "Inicio de sesion exitoso",
+        usuario: usuarioEncontrado.nombreUsuario,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Ocurrio un error al iniciar sesion" });
+  }
+};

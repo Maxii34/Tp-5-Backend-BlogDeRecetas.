@@ -27,6 +27,13 @@ const usuarioSchema = new Schema(
   }
 );
 
+//Oculta el password al hacer el listar
+usuarioSchema.methods.toJSON = function () {
+  const userObject = this.toObject();
+  delete userObject.password;
+  return userObject;
+};
+
 const usuario = mongoose.model("usuario", usuarioSchema);
 
 export default usuario;
