@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 const generarJWT = (usuario, email) => {
   try {
     const payload = { usuario, email };
-    const token = jwt.sign(payload, process.env.SFCRETJWT, { expiresIn: "1h" });
+    const token = jwt.sign(payload, process.env.SECRETJWT, { expiresIn: "2h" });
     return token;
   } catch (error) {
     console.error(error);
