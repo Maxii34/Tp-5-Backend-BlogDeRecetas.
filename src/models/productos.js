@@ -38,7 +38,7 @@ const productoSchema = new Schema({
     categoria: {
         type: String,
         required: true,
-        enum: ['PastelesYTartas', 'Galletas', 'PostresFrios', 'MasasYRellenos']
+        enum: ['Alfajores', 'Budin', 'Muffins', 'Tortas y tartas', 'Postres', 'Para el te', 'Galletas', 'Otras recetas' ]
     }
 }, {
     timestamps: true // Agrega createdAt y updatedAt automáticamente
