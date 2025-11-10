@@ -14,11 +14,13 @@ import verificarJWT from "../middlewares/validarToken.js";
 //Router() se guarda en router.
 const router = Router();
 
-router.route("/").post([verificarJWT,validarReceta], crearRecetas).get(listarRecetas);
-router
-  .route("/:id")
-  .delete(validacionIdProductos,borrarRecetas)
-  .put([validacionIdProductos,validarReceta],editarRecetas)
+router.route("/")
+.post([verificarJWT,validarReceta], crearRecetas)
+.get(listarRecetas);
+
+router.route("/:id")
+  .delete([verificarJWT, validacionIdProductos],borrarRecetas)
+  .put([verificarJWT, validacionIdProductos, validarReceta],editarRecetas)
   .get(validacionIdProductos, obtenerRecetas);
 
 export default router;
